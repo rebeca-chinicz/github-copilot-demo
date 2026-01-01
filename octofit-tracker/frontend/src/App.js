@@ -5,6 +5,7 @@ import Leaderboard from './components/Leaderboard';
 import Teams from './components/Teams';
 import Users from './components/Users';
 import Workouts from './components/Workouts';
+import logoOctofit from './logo-octofit.svg';
 import './App.css';
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
             <Link className="navbar-brand fw-bold" to="/">
-              🏋️ OctoFit Tracker - Mergington High School
+              <img src={logoOctofit} alt="OctoFit Logo" className="octofit-logo" />
+              OctoFit Tracker - Mergington High School
             </Link>
             <button
               className="navbar-toggler"

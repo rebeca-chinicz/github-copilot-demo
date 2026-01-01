@@ -1,0 +1,20 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#1e3a5f" rx="4"/>
+  
+  <!-- Dumbbell icon -->
+  <g transform="translate(16, 16)">
+    <!-- Left weight -->
+    <rect x="-14" y="-4" width="4" height="8" fill="#ff6b6b" rx="1"/>
+    <rect x="-16" y="-5" width="8" height="2" fill="#ff6b6b" rx="0.5"/>
+    <rect x="-16" y="3" width="8" height="2" fill="#ff6b6b" rx="0.5"/>
+    
+    <!-- Bar -->
+    <rect x="-10" y="-2" width="20" height="4" fill="#ffd700" rx="2"/>
+    
+    <!-- Right weight -->
+    <rect x="10" y="-4" width="4" height="8" fill="#ff6b6b" rx="1"/>
+    <rect x="8" y="-5" width="8" height="2" fill="#ff6b6b" rx="0.5"/>
+    <rect x="8" y="3" width="8" height="2" fill="#ff6b6b" rx="0.5"/>
+  </g>
+</svg>
