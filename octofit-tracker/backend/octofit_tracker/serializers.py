@@ -22,28 +22,34 @@ class ObjectIdField(serializers.Field):
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for User model"""
-    _id = ObjectIdField()
+    _id = ObjectIdField(read_only=True)
 
     class Meta:
         model = User
         fields = ['_id', 'username', 'email', 'created_at', 'updated_at']
         extra_kwargs = {
             'password': {'write_only': True},
+            'created_at': {'read_only': True},
+            'updated_at': {'read_only': True},
         }
 
 
 class TeamSerializer(serializers.ModelSerializer):
     """Serializer for Team model"""
-    _id = ObjectIdField()
+    _id = ObjectIdField(read_only=True)
 
     class Meta:
         model = Team
         fields = ['_id', 'name', 'description', 'created_at', 'updated_at']
+        extra_kwargs = {
+            'created_at': {'read_only': True},
+            'updated_at': {'read_only': True},
+        }
 
 
 class ActivitySerializer(serializers.ModelSerializer):
     """Serializer for Activity model"""
-    _id = ObjectIdField()
+    _id = ObjectIdField(read_only=True)
     user = UserSerializer(read_only=True)
     user_id = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
@@ -54,22 +60,33 @@ class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
         fields = ['_id', 'user', 'user_id', 'activity_type', 'duration', 'distance', 'calories', 'created_at', 'updated_at']
+        extra_kwargs = {
+            'created_at': {'read_only': True},
+            'updated_at': {'read_only': True},
+        }
 
 
 class LeaderboardSerializer(serializers.ModelSerializer):
     """Serializer for Leaderboard model"""
-    _id = ObjectIdField()
+    _id = ObjectIdField(read_only=True)
     user = UserSerializer(read_only=True)
 
     class Meta:
         model = Leaderboard
         fields = ['_id', 'user', 'score', 'rank', 'total_activities', 'total_duration', 'updated_at']
+        extra_kwargs = {
+            'updated_at': {'read_only': True},
+        }
 
 
 class WorkoutSerializer(serializers.ModelSerializer):
     """Serializer for Workout model"""
-    _id = ObjectIdField()
+    _id = ObjectIdField(read_only=True)
 
     class Meta:
         model = Workout
         fields = ['_id', 'name', 'description', 'difficulty_level', 'duration', 'target_audience', 'created_at', 'updated_at']
+        extra_kwargs = {
+            'created_at': {'read_only': True},
+            'updated_at': {'read_only': True},
+        }

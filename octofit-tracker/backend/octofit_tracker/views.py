@@ -6,6 +6,7 @@ Handles all HTTP requests and returns appropriate responses.
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 from .serializers import (
     UserSerializer,
     TeamSerializer,
@@ -14,6 +15,7 @@ from .serializers import (
     WorkoutSerializer,
 )
 from .models import User, Team, Activity, Leaderboard, Workout
+from bson import ObjectId
 
 
 @api_view(['GET'])
@@ -42,6 +44,20 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_field = '_id'
+
+    def get_object(self):
+        """Override to support MongoDB ObjectId lookup"""
+        pk = self.kwargs.get(self.lookup_field)
+        try:
+            # Try to convert to ObjectId
+            obj_id = ObjectId(pk)
+            try:
+                return User.objects.get(_id=obj_id)
+            except User.DoesNotExist:
+                raise NotFound('User not found.')
+        except Exception:
+            raise NotFound('Invalid user ID format.')
 
 
 class TeamViewSet(viewsets.ModelViewSet):
@@ -51,6 +67,19 @@ class TeamViewSet(viewsets.ModelViewSet):
     """
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    lookup_field = '_id'
+
+    def get_object(self):
+        """Override to support MongoDB ObjectId lookup"""
+        pk = self.kwargs.get(self.lookup_field)
+        try:
+            obj_id = ObjectId(pk)
+            try:
+                return Team.objects.get(_id=obj_id)
+            except Team.DoesNotExist:
+                raise NotFound('Team not found.')
+        except Exception:
+            raise NotFound('Invalid team ID format.')
 
 
 class ActivityViewSet(viewsets.ModelViewSet):
@@ -60,6 +89,19 @@ class ActivityViewSet(viewsets.ModelViewSet):
     """
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
+    lookup_field = '_id'
+
+    def get_object(self):
+        """Override to support MongoDB ObjectId lookup"""
+        pk = self.kwargs.get(self.lookup_field)
+        try:
+            obj_id = ObjectId(pk)
+            try:
+                return Activity.objects.get(_id=obj_id)
+            except Activity.DoesNotExist:
+                raise NotFound('Activity not found.')
+        except Exception:
+            raise NotFound('Invalid activity ID format.')
 
 
 class LeaderboardViewSet(viewsets.ModelViewSet):
@@ -69,6 +111,19 @@ class LeaderboardViewSet(viewsets.ModelViewSet):
     """
     queryset = Leaderboard.objects.all()
     serializer_class = LeaderboardSerializer
+    lookup_field = '_id'
+
+    def get_object(self):
+        """Override to support MongoDB ObjectId lookup"""
+        pk = self.kwargs.get(self.lookup_field)
+        try:
+            obj_id = ObjectId(pk)
+            try:
+                return Leaderboard.objects.get(_id=obj_id)
+            except Leaderboard.DoesNotExist:
+                raise NotFound('Leaderboard entry not found.')
+        except Exception:
+            raise NotFound('Invalid leaderboard ID format.')
 
 
 class WorkoutViewSet(viewsets.ModelViewSet):
@@ -78,3 +133,16 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     """
     queryset = Workout.objects.all()
     serializer_class = WorkoutSerializer
+    lookup_field = '_id'
+
+    def get_object(self):
+        """Override to support MongoDB ObjectId lookup"""
+        pk = self.kwargs.get(self.lookup_field)
+        try:
+            obj_id = ObjectId(pk)
+            try:
+                return Workout.objects.get(_id=obj_id)
+            except Workout.DoesNotExist:
+                raise NotFound('Workout not found.')
+        except Exception:
+            raise NotFound('Invalid workout ID format.')
